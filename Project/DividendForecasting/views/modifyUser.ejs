@@ -1,0 +1,79 @@
+<main id="main-holder" class="apple-form">
+  <h1 id="login-header">EDIT USER: <%= login %>
+  </h1>
+  <img src="images/modifyUser.png" class="apple-image" />
+  <form action="/modifyUserPost2" method="post" id="login-form">
+    <input class="tableText" type="text" id="id" name="idUser" style="display:none" class="td" readonly
+      value="<%= id %>">
+    <p style="text-align:center; font-size:20px; font-weight:600;">Логин:</p>
+    <input type="text" name="username" id="username-field" class="login-form-field apple-input" placeholder="Логин"
+      value="<%= login %>">
+    <p>
+      <select size="4" name="role" class="apple-input" style="font-size:17px;text-align:center;width:100%">
+        <option disabled>Select a role</option>
+        <option value="admin">Administrator</option>
+        <option value="user+">Financier</option>
+        <option value="user">User</option>
+      </select>
+    </p>
+    <input type="submit" value="Изменить" class="login-form-submit apple-submit" style="margin-top:2%">
+  </form>
+  <form action="/resetPassword" method="post" id="login-form">
+    <input class="tableText" type="text" id="id" name="idUser" class="td" readonly style="display:none"
+      value="<%= id %>">
+    <input type="text" name="username" id="username-field" class="login-form-field apple-input" placeholder="Логин"
+      style="margin-top:20%;display:none" value="<%= login %>">
+    <input type="submit" value="Сбросить пароль" class="login-form-submit apple-submit" style="margin-top:0%">
+  </form>
+  <div id="login-error-msg-holder">
+    <p id="login-error-msg" style="color:green"><%- message %></span></p>
+  </div>
+</main>
+<style>
+  .apple-form {
+    margin-left: 35%;
+    margin-top: 12vh;
+    border: 1px solid #c4c4c4;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  #login-header {
+    text-align: center;
+    font-size: 26px;
+  }
+
+  .apple-image {
+    width: 150px;
+  }
+
+  #login-form {
+    margin-bottom: 8%;
+  }
+
+  .login-form-field {
+    margin-top: 5%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    width: 100%;
+  }
+
+  .apple-input {
+    margin-top: 3%;
+  }
+
+  .login-form-submit {
+    margin-top: 5%;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #32e089;
+    color: #fff;
+    cursor: pointer;
+  }
+</style>

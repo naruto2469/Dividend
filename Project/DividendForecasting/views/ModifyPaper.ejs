@@ -1,0 +1,72 @@
+<main id="main-holder" class="apple-form">
+  <h1 id="login-header">CHANGES IN THE SECURITIES DATA</h1>
+  <img src="images/modifyPaper.png" class="apple-image" />
+  <form action="/modifyPaperDB" method="post" id="login-form">
+    <input type="text" name="id" class="login-form-field apple-input" placeholder="Компания" style="display:none"
+      value="<%= idd %>">
+    <input type="text" name="company" class="login-form-field apple-input" placeholder="Компания"
+      value="<%= company %>">
+    <input type="text" name="property_form" class="login-form-field apple-input" placeholder="Форма владения"
+      value="<%= property_form %>">
+    <input type="text" name="char_revers" class="login-form-field apple-input" placeholder="Характер обращаемости"
+      value="<%= char_revers %>">
+    <input type="text" name="existanse_form" class="login-form-field apple-input" placeholder="Форма существования"
+      value="<%= existanse_form %>">
+    <input type="date" name="date_in" class="login-form-field apple-input" placeholder="Пароль" value="<%= date_in %>">
+    <input type="date" name="date_out" class="login-form-field apple-input" placeholder="Повторите пароль"
+      value="<%= date_out %>">
+    <input type="text" name="sum" class="login-form-field apple-input" placeholder="Стоимость единицы"
+      value="<%= sum %>">
+    <input type="text" name="procent" class="login-form-field apple-input" placeholder="Дивиденты"
+      value="<%= procent %>">
+    <input type="submit" value="Изменить" class="login-form-submit apple-submit">
+  </form>
+</main>
+<style>
+  .apple-form {
+    margin-left: 35%;
+    margin-top: 12vh;
+    border: 1px solid #c4c4c4;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  #login-header {
+    text-align: center;
+    font-size: 26px;
+  }
+
+  .apple-image {
+    width: 150px;
+  }
+
+  #login-form {
+    margin-bottom: 8%;
+  }
+
+  .login-form-field {
+    margin-top: 3%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    width: 100%;
+  }
+
+  .apple-input {
+    margin-top: 3%;
+  }
+
+  .login-form-submit {
+    margin-top: 5%;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007aff;
+    color: #fff;
+    cursor: pointer;
+  }
+</style>

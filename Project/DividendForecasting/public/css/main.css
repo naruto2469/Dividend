@@ -1,0 +1,149 @@
+body {
+	background-color: white;
+	min-height: 100%;
+}
+
+html {
+	min-height: 100%;
+	background-color: white;
+}
+
+.mainButton {
+	color: #fff;
+	/* цвет текста */
+	text-decoration: none;
+	/* убирать подчёркивание у ссылок */
+	user-select: none;
+	/* убирать выделение текста */
+	background: rgb(212, 75, 56);
+	/* фон кнопки */
+	padding: .7em 1.5em;
+	/* отступ от текста */
+	outline: none;
+	/* убирать контур в Mozilla */
+	font-size: 26px;
+	border-radius: 0px;
+}
+
+.regButton {
+	color: black;
+	/* цвет текста */
+	text-decoration: none;
+	/* убирать подчёркивание у ссылок */
+	user-select: none;
+	/* убирать выделение текста */
+	background: orange;
+	/* фон кнопки */
+	padding: .5em 1em;
+	/* отступ от текста */
+	outline: none;
+	/* убирать контур в Mozilla */
+	font-size: 16px;
+	border-radius: 0px;
+}
+
+.regButton:hover {
+	background: rgb(232, 95, 76);
+}
+
+/* при наведении курсора мышки */
+.regButton:active {
+	background: rgb(152, 15, 0);
+}
+
+/* при нажатии */
+
+.mainButton:hover {
+	background: rgb(232, 95, 76);
+	color: white;
+}
+
+/* при наведении курсора мышки */
+.mainButton:active {
+	background: rgb(152, 15, 0);
+}
+
+/* при нажатии */
+
+.windowContent {
+	background-color: #eee;
+	min-height: 100%;
+}
+
+.mainImage {
+	width: 30%;
+	margin-top: 1%;
+	margin-left: 35%;
+	border-radius: 0px;
+}
+
+.hrefDiv {
+	display: inline;
+	position: absolute;
+	margin-left: 12%;
+	color: white;
+	width: 80%;
+	top: 3%;
+	text-decoration: none;
+}
+
+.hrefText {
+	text-decoration: none;
+	margin-left: 1%;
+	color: white;
+	font-size: 26px;
+}
+
+.wrapper {
+	width: 700px;
+	margin: 0 auto;
+	background-color: #fff;
+	padding: 10px;
+}
+
+.nameText {
+	position: absolute;
+	margin-left: 1%;
+	bottom: 93%;
+	font-size: 26px;
+	text-decoration: none;
+	color: white;
+}
+
+.hrefVis {
+	text-decoration: none;
+}
+
+.hrefVis:hover {
+	color: rgb(232, 95, 76);
+}
+
+/* при наведении курсора мышки */
+.hrefVis:active {
+	color: rgb(152, 15, 0);
+}
+
+/* при нажатии */
+
+header,
+footer {
+	background-color: #1d212d;
+	padding: 20px;
+	color: white;
+	border-radius: 0px;
+	width: 100%;
+}
+
+main {
+	background-color: white;
+	background-position: bottom center;
+	background-repeat: repeat-x;
+	background-image: url(https://sun9-69.userapi.com/impf/cUttWmwQbvlJbxNdbw5qRKgNzUAYScU7M6lUlw/5o-FfDTC2sc.jpg?size=1200x594&quality=96&sign=950466abe4b9744a1dee946fb292b3fa&type=album);
+	padding: 00px;
+}
+
+.layout-sidebar {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: 2fr 1fr;
+}

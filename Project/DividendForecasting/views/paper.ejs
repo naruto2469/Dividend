@@ -1,0 +1,409 @@
+<div class="container">
+	<div class="table-container">
+		<table class="table" style="font-family: 'Helvetica Neue', Arial, sans-serif;">
+			<col width="200">
+			<col width="200">
+			<col width="250">
+			<col width="250">
+			<col width="250">
+			<col width="200">
+			<col width="200">
+			<col width="170">
+			<col width="150">
+			<tr style="text-align:center;">
+				<th id="id" style="text-align:center">Identifier</th>
+				<th id="login">Company</th>
+				<th id="role">Form of ownership</th>
+				<th id="password">Characteristics of negotiability</th>
+				<th id="password">Form of existence</th>
+				<th id="password">Lifespan</th>
+				<th id="password">Date of issue</th>
+				<th id="password">Unit cost (rub)</th>
+				<th id="password">Dividends (%)</th>
+			</tr>
+			<% for(var i=0; i < papers.length; i++) { %>
+				<form class=<%=papers[i].ID %> action="deletePaper" method = "post">
+					<input type="text" name="id" id="updateBtn" class="button28" value=<%=papers[i].ID %>
+					style="border:2px
+					solid black;display:none"/>
+				</form>
+				<form name=<%=papers[i].ID %> action="modifyPapersPost" method = "post">
+					<tr id=<%=papers[i].ID %> onclick = "rowClick(this.id)" class="active" style="text-align:center">
+						<td>
+							<input class="tableText" type="text" id="id" name="id" onclick() class="td" readonly
+								style="width:200px;border:2px solid transparent" value="<%= papers[i].ID %>">
+						</td>
+						<td>
+							<input class="tableText" type="text" name="company" class="td"
+								style="width:200px;border:none" readonly value="<%= papers[i].Company %>">
+						</td>
+						<td>
+							<input class="tableText" readonly type="text" name="property_form" class="td"
+								style="width:250px;border:none" value="<%= papers[i].Property_form %>">
+						</td>
+						<td>
+							<input class="tableText" readonly type="text" name="char_revers" class="td"
+								style="width:250px;border:none" value="<%= papers[i].Char_Revers %>">
+						</td>
+						<td>
+							<input class="tableText" readonly type="text" name="existanse_form" class="td"
+								style="width:250px;border:none" value="<%= papers[i].Existanse_Form %>">
+						</td>
+						<td>
+							<input class="tableText" readonly type="text" name="date_in" class="td"
+								style="width:200px;border:none" value="<%= papers[i].Date_In.toLocaleDateString() %>">
+						</td>
+						<td>
+							<input class="tableText" readonly type="text" name="date_out" class="td"
+								style="width:200px;border:none" value="<%= papers[i].Date_Out.toLocaleDateString() %>">
+						</td>
+						<td>
+							<input id="sum<%= papers[i].ID %>" type="text" name="sum" class="td"
+								style="width:170px;border:none;display:none" value="<%= papers[i].Sum %>">
+							<input class=<%="tableText " + "Sum" + papers[i].ID %> readonly type="text" name="sum"
+							class="td" style="width:170px;border:none" value= "<%= papers[i].Sum %>" >
+						</td>
+						<td>
+							<input id="procent<%= papers[i].ID %>" type="text" name="sum" class="td"
+								style="width:170px;border:none;display:none" value="<%= papers[i].Procent %>">
+							<input class=<%="tableText " + "Procent" + papers[i].Procent %> readonly type="text"
+							name="procent" class="td" style="width:140px;border:none" value= "<%= papers[i].Procent %>"
+								>
+						</td>
+						<td>
+							<input type="submit" class="button28" value="Изменить"
+								style="border:2px solid black;display:none" />
+						</td>
+				</form>
+				<% } %>
+					<tr>
+
+		</table>
+	</div>
+
+
+
+	<div class="form-container">
+		<h1 style="font-size: 24px; text-align: center; margin-top: 5%;">CALCULATE SECURITY YIELD:</h1>
+		<input type="text" name="kolvo" class="form-field" placeholder="Кол-во бумаг">
+		<input type="date" name="dateSumIn" class="form-field">
+		<input type="text" name="itogSum" class="form-field" placeholder="Итоговая сумма (р.)">
+		<input type="submit" onclick="sum()" value="Рассчитать" class="submit-button">
+	</div>
+
+	<div class="graph-container">
+		<h1 style="font-size: 24px; text-align: center; margin-top: 5%;">PRICE CHANGE SCHEDULE:</h1>
+		<canvas id="myChart"></canvas>
+	</div>
+
+	<div id="adminDiv" class="admin-container" style="visibility:hidden">
+		<form action="addPaper" method="post">
+			<input type="submit" name="updateBtn" id="updateBtn" class="admin-button" value="Добавить">
+		</form>
+		<input type="submit" onclick="updateClick()" name="updateBtn" id="updateBtn" class="admin-button"
+			value="Изменить">
+		<input type="submit" onclick="deleteClick()" name="updateBtn" id="updateBtn" class="admin-button"
+			value="Удалить">
+	</div>
+</div>
+
+<script>
+
+	var role = "<%- userRole %>";
+	if (role != 3) {
+		document.getElementById("adminDiv").style.visibility = "visible";
+	}
+
+	// Функция суммирования
+	function sum() {
+		var arr = document.getElementsByTagName("tr");
+		var trId = 0;
+
+		// Получаем значение поля 'kolvo'
+		var kolvo = document.getElementsByName('kolvo')[0].value;
+		let today = new Date().toLocaleDateString();
+
+		var date1 = today;
+		date1 = date1.split(".");
+		var date1M = date1.reverse().join("-");
+
+		// Вычисляем количество дней между двумя датами
+		var days = getNumberOfDays(date1M, document.getElementsByName('dateSumIn')[0].value);
+
+		// Находим строку с фоновым цветом 'palegreen'
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i].style.backgroundColor == "palegreen") {
+				trId = arr[i].id;
+			}
+		}
+
+		// Получаем значения полей 'sum' и 'procent' для выбранной строки
+		var sumPaper = document.getElementById('sum' + trId).value;
+		var procent = document.getElementById('procent' + trId).value;
+
+		// Вычисляем итоговую сумму
+		var itogSum = (kolvo * sumPaper) * ((procent / 365 * days) / 100);
+
+		// Записываем итоговую сумму в поле 'itogSum'
+		document.getElementsByName('itogSum')[0].value = itogSum.toFixed(2);
+	}
+
+	// Функция для получения количества дней между двумя датами
+	function getNumberOfDays(start, end) {
+		const date1 = new Date(start);
+		const date2 = new Date(end);
+
+		// Один день в миллисекундах
+		const oneDay = 1000 * 60 * 60 * 24;
+
+		// Вычисляем разницу во времени между двумя датами
+		const diffInTime = date2.getTime() - date1.getTime();
+
+		// Вычисляем количество дней между двумя датами
+		const diffInDays = Math.round(diffInTime / oneDay);
+
+		return diffInDays;
+	}
+
+	// Функция для удаления строки
+	function deleteClick() {
+		var arr = document.getElementsByTagName("tr");
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i].style.backgroundColor == "palegreen") {
+				// Отправляем форму с классом, соответствующим идентификатору строки
+				document.getElementsByClassName(arr[i].id)[0].submit();
+			}
+		}
+	}
+
+	// Функция для обновления строки
+	function updateClick() {
+		var id = 0;
+		var arr = document.getElementsByTagName("tr");
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i].style.backgroundColor == "palegreen") {
+				// Отправляем форму с именем, соответствующим идентификатору строки
+				document.getElementsByName(arr[i].id)[0].submit();
+			}
+		}
+	}
+
+	// Функция для обработки клика по строке
+	function rowClick(id) {
+		var arr = document.getElementsByTagName("tr");
+		for (let i = 0; i < arr.length; i++) {
+			arr[i].style.backgroundColor = "transparent";
+		}
+
+		// Устанавливаем фоновый цвет 'palegreen' для выбранной строки
+		document.getElementById(id).style.backgroundColor = "palegreen";
+		getGraf(id);
+	}
+
+
+	function getGraf(id) {
+		var labelsBuf = [];
+		var dataBuf = [];
+		<% for (var i = 0; i < divBuff.length; i++) { %>
+		  if (<%= divBuff[i].Paper_Id %> == id) {
+				let date1 = "<%= divBuff[i].DATE.toLocaleDateString() %>";
+				date1 = date1.split(".");
+				var date1M = date1.reverse().join("-");
+
+				labelsBuf.push(date1M);
+				dataBuf.push(<%= divBuff[i].Sum %>);
+			}
+		<% } %>
+
+			let ctx = document.getElementById('myChart').getContext('2d');
+
+		// Destroy existing chart instance if it exists
+		if (window.chart !== undefined) {
+			window.chart.destroy();
+		}
+
+		// Создаем полупрозрачный градиентный фон синева
+		let gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+		gradient.addColorStop(0, 'rgba(193, 240, 214, 0.8)'); // Стартовый цвет градиента
+		gradient.addColorStop(1, 'rgba(193, 240, 214, 0)'); // Конечный цвет градиента
+
+		// Find min and max values for X axis
+		let minX = labelsBuf.reduce((min, current) => Math.min(min, current));
+		let maxX = labelsBuf.reduce((max, current) => Math.max(max, current));
+
+		// Find min and max values for Y axis
+		let minY = Math.min(...dataBuf);
+		let maxY = Math.max(...dataBuf);
+
+		// Create new chart instance
+		window.chart = new Chart(ctx, {
+			// Тип графика
+			type: 'line',
+			// Создание графиков
+			data: {
+				// Точки графиков
+				labels: labelsBuf,
+				// График
+				datasets: [{
+					label: '', // Название
+					backgroundColor: gradient, // Градиентный фон
+					borderColor: '#c1f0d6', // Цвет линий
+					borderWidth: 2, // Толщина линий
+					pointBackgroundColor: 'white', // Цвет точек
+					pointBorderColor: 'black', // Цвет обводки точек
+					pointRadius: 4, // Размер точек
+					pointHoverRadius: 6, // Размер точек при наведении
+					lineTension: 0, // Растяжение линии (нет растяжения)
+					data: dataBuf // Данные каждой точки графика
+				}]
+			},
+			// Настройки графиков
+			options: {
+				responsive: true, // График автоматически масштабируется
+				maintainAspectRatio: true, // Сохранение пропорций графика
+				scales: {
+					x: {
+						min: minX, // Минимальное значение оси X
+						max: maxX, // Максимальное значение оси X
+						grid: {
+							display: false // Скрыть сетку по оси X
+						},
+						ticks: {
+							font: {
+								family: 'Helvetica Neue', // Шрифт оси X
+								size: 12 // Размер шрифта оси X
+							},
+							color: 'rgba(0, 0, 0, 0.6)' // Цвет текста оси X
+						}
+					},
+					y: {
+						min: minY, // Минимальное значение оси Y
+						max: maxY, // Максимальное значение оси Y
+						grid: {
+							color: 'rgba(0, 0, 0, 0.1)' // Цвет сетки по оси Y
+						},
+						ticks: {
+							beginAtZero: true, // Начать масштабирование оси Y с нуля
+							font: {
+								family: 'Helvetica Neue', // Шрифт оси Y
+								size: 12 // Размер шрифта оси Y
+							},
+							color: 'rgba(0, 0, 0, 0.6)' // Цвет текста оси Y
+						}
+					}
+				},
+				plugins: {
+					legend: {
+						display: false // Скрыть легенду графика
+					}
+				}
+			}
+		});
+	}
+</script>
+
+<style>
+	main {
+		background-image: none;
+		background-color: #e5fad8;
+	}
+
+	body {
+		font-family: 'Helvetica Neue', Arial, sans-serif;
+		background-color: #f2f2f2;
+		color: #333;
+		margin: 0;
+		background-image: none !important;
+	}
+
+	.container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.table-container {
+		width: 100%;
+		max-width: none;
+		margin-top: 12vh;
+		min-height: 300px;
+		background-color: #fff;
+		border-radius: 15px;
+		overflow: auto;
+	}
+
+	.table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table th,
+	.table td {
+		padding: 10px;
+		text-align: center;
+	}
+
+	.table th {
+		background-color: #333;
+		color: #fff;
+	}
+
+	.table tr:nth-child(even) {
+		background-color: #f9f9f9;
+	}
+
+	.form-container {
+		width: 30%;
+		margin: 5% auto;
+		background-color: #fff;
+		border-radius: 15px;
+		padding: 2%;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.form-field {
+		width: 100%;
+		padding: 5px;
+		margin-bottom: 10px;
+		border: none;
+		border-radius: 5px;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+
+	.submit-button {
+		width: 100%;
+		padding: 10px;
+		background-color: #333;
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.graph-container {
+		width: 30%;
+		margin: 5% auto;
+		background-color: #fff;
+		border-radius: 15px;
+		padding: 2%;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.admin-container {
+		width: 20%;
+		margin-top: 5%;
+		visibility: hidden;
+	}
+
+	.admin-button {
+		width: 100%;
+		padding: 10px;
+		background-color: #333;
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-bottom: 10px;
+		/* Added spacing */
+	}
+</style>

@@ -1,0 +1,275 @@
+<main id="main-holder" style="height: calc(100vh);">
+  <div class="modal__background">
+    <div class="modal__window">
+      <div id="logo-container" style="text-align: center;">
+        <img src="images/logomini.png" alt="Logo">
+      </div>
+      <form class="auth-form" action="/reg_input" method="post">
+        <label class="auth-form__label">
+          <span class="auth-form__placeholder">Login</span>
+          <input class="auth-form__input input-username" type="text" name="username" autocomplete="off" required>
+        </label>
+        <label class="auth-form__label" g>
+          <span class="auth-form__placeholder">Password</span>
+          <input class="auth-form__input input-password" type="password" name="password" autocomplete="off" required>
+          <div class="auth-form__toggler">
+            <i class="la la-eye auth-form__icon"></i>
+            <input type="checkbox" class="auth-form__checkbox password-toggler">
+          </div>
+        </label>
+        <label class="auth-form__label">
+          <span class="auth-form__placeholder">Repeat password</span>
+          <input class="auth-form__input input-password_" type="password" name="password_" autocomplete="off" required>
+          <div class="auth-form__toggler">
+            <i class="la la-eye auth-form__icon"></i>
+            <input type="checkbox" class="auth-form__checkbox password-toggler">
+          </div>
+        </label>
+        <div class="auth-form__answer"></div>
+        <input class="auth-form__submit regButton" type="submit" value="Регистрация">
+        <div class="auth-form__bottom">
+          <span>Already have an account?</span>
+          <a href="/login">Create</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</main>
+<style>
+  * {
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  #main-holder {
+    width: calc(100% - 2px);
+    margin: 0 auto;
+    height: calc(100vh);
+  }
+
+  html,
+  body {
+    min-height: 100vh;
+  }
+
+  body {
+    background: #232323;
+    color: #fff;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+
+  .text-success {
+    color: #28a745;
+  }
+
+  .text-danger {
+    color: #dc3545;
+  }
+
+  .modal__background {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal__window {
+    box-sizing: border-box;
+    padding: 29px;
+    border: 1px solid #999;
+    border-radius: 15px;
+  }
+
+  @media all and (min-width: 576px) {
+    .modal__window {
+      padding: 49px 79px 29px;
+    }
+  }
+
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 1px;
+  }
+
+  .auth-form__label {
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .auth-form__placeholder {
+    position: absolute;
+    color: #999;
+    cursor: text;
+    font-size: 16px;
+    top: 9px;
+    transition: all 0.2s;
+  }
+
+  .auth-form__input {
+    position: relative;
+    width: 240px;
+    height: 40px;
+    background: transparent;
+    color: #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    box-shadow: 0 1px 0 0 #666;
+    transition: all 0.2s;
+  }
+
+  .auth-form__input:focus {
+    box-shadow: 0 2px 0 0 #bbb;
+  }
+
+  .auth-form__toggler,
+  .auth-form__icon,
+  .auth-form__checkbox {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+  }
+
+  .auth-form__checkbox {
+    cursor: inherit;
+  }
+
+  .auth-form__toggler {
+    cursor: pointer;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .auth-form__icon {
+    color: #666;
+  }
+
+  .auth-form__toggler:hover .auth-form__icon {
+    color: #ccc;
+  }
+
+  .password-toggler {
+    opacity: 0;
+    box-sizing: border-box;
+    border: none;
+  }
+
+  .auth-form__answer {
+    height: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 14px;
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 30px;
+  }
+
+  .auth-form__submit {
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    height: 50px;
+    border-radius: 10px;
+    background: transparent;
+    color: #ccc;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .auth-form__submit:hover {
+    background: #fff;
+    border: 1px solid #fff;
+    color: #232323;
+  }
+
+  .auth-form__bottom {
+    margin-top: 30px;
+    font-size: 12px;
+    color: #000000;
+    text-align: center;
+  }
+
+  .auth-form__bottom a {
+    color: #007bff;
+  }
+
+  .auth-form__bottom a:hover {
+    color: #ddd;
+  }
+
+  .hint {
+    font-size: 12px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  #login-error-msg-holder {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .auth-form__label.focus .auth-form__placeholder {
+    top: -12px;
+    font-size: 12px;
+  }
+
+  .auth-form__input.focus {
+    box-shadow: 0 2px 0 0 #bbb;
+  }
+
+  .auth-form__label.focus .auth-form__placeholder,
+  .auth-form__label.filled .auth-form__placeholder {
+    top: -12px;
+    font-size: 12px;
+  }
+
+  .auth-form__input.focus,
+  .auth-form__input.filled {
+    box-shadow: 0 2px 0 0 #bbb;
+  }
+
+  #login-error-msg {
+    /* Добавить соответствующие стили для обработки ошибки */
+  }
+</style>
+
+<script>
+  // Получаем все поля ввода
+  const inputFields = document.querySelectorAll('.auth-form__input');
+
+  // Добавляем обработчик события для каждого поля ввода
+  inputFields.forEach((input) => {
+    input.addEventListener('focus', () => {
+      const parentLabel = input.parentNode;
+      parentLabel.classList.add('focus');
+    });
+
+    input.addEventListener('blur', () => {
+      const parentLabel = input.parentNode;
+      parentLabel.classList.remove('focus');
+
+      // Проверяем, если поле ввода пустое, то сбрасываем сдвиг наверх
+      if (input.value === '') {
+        parentLabel.classList.remove('filled');
+      } else {
+        parentLabel.classList.add('filled');
+      }
+    });
+
+    // Проверяем состояние полей ввода при загрузке страницы
+    if (input.value !== '') {
+      const parentLabel = input.parentNode;
+      parentLabel.classList.add('filled');
+    }
+  });
+</script>
